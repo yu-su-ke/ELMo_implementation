@@ -102,3 +102,11 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# myfile
+*.pkl
+livedoor/
+entity_vector/entity_vector.model.bin
+model/
+.idea
+.DS_Store
