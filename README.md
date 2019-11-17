@@ -5,7 +5,22 @@
 
 ## Preparation
 - [このGoogle Drive](https://drive.google.com/drive/u/1/folders/1sau1I10rFeAn8BDk8eZDL5qaEjTlNghp)から「文字単位・単語単位埋め込みモデル」内のencoder.pklとtoken_embedder.pklをcharフォルダに、「単語単位埋め込みモデル」内のencoder.pklとtoken_embedder.pklをwordフォルダに入れる。
-- ライブラリのインストールを行う。
+- Livedoorニュースコーパスをダウンロードし、ELMo_implementation/livedoorに置き、train、dev、test毎に記事内容、ラベルをインデックスとしたcsvファイルを作る。
+- ライブラリのインストールを行う。  
 ```
 pip install -r requirements.txt
+```
+
+## Execution
+```
+python main.py
+```
+
+## result
+```
+num_epoch = 7
+bach_size = 64
+Training complete in 53m 25s
+acc : 0.9293478260869565
+f1-score: 0.9301423993362409
 ```
