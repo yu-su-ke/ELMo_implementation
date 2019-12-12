@@ -17,7 +17,7 @@ python main.py
 ```
 
 ## Result
-train : test = 9 : 1の割合で実行した結果
+train : dev : test = 8 : 1 : 1の割合で実行した結果
 ```
 num_epoch = 7
 bach_size = 64
