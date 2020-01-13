@@ -27,9 +27,9 @@ def main():
     embedding_model = KeyedVectors.load_word2vec_format(w2v_embedding_path, binary=True)
     is_char = False
 
-    x_train, x_train_padded, y_train, train_num = prepare_train(DATA_ROOT)
-    x_valid, x_valid_padded, y_valid, valid_num = prepare_valid(DATA_ROOT, train_num)
-    # x_test, x_test_padded, y_test, test_num = prepare_test(DATA_ROOT, train_num)
+    x_train, x_train_padded, y_train, train_num = prepare_train(Path(DATA_ROOT + 'livedoor') / "dev.csv")
+    x_valid, x_valid_padded, y_valid, valid_num = prepare_valid(Path(DATA_ROOT + 'livedoor') / "dev.csv", train_num)
+    # x_test, x_test_padded, y_test, test_num = prepare_test(Path(DATA_ROOT + 'livedoor') / "dev.csv", train_num)
 
     x_padded, y_main, tokenizer_text, max_features = combine_train_valid(x_train, y_train, x_valid, y_valid)
     # x_padded, y_main, tokenizer_text, max_features = combine_train_test(x_train, y_train, x_test, y_test)
@@ -54,7 +54,6 @@ def main():
         words = [reverse_word_map.get(letter) for letter in list_of_indices]
         return words
 
-
     if is_char == True:
         char_e = Embedder(char_model_path)
         model = ELMoNet(char_e, embedding_matrix, 9, max_features, sequence_to_text)
@@ -63,7 +62,6 @@ def main():
         word_e = Embedder(word_model_path)
         model = ELMoNet(word_e, embedding_matrix, 9, max_features, sequence_to_text)
         print('word mode')
-
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 

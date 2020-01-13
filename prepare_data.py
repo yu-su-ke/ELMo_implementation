@@ -9,13 +9,13 @@ from function import prepare_labels
 from format_text import preprocess
 
 
-def prepare_train(DATA_ROOT):
+def prepare_train(file_path):
     # トレインデータの用意
-    train = pd.read_csv(Path(DATA_ROOT + 'livedoor') / "train.csv", header=None)
+    train = pd.read_csv(file_path, header=None)
     train_num = train.shape[0]
     # train_num = 1000
     train_path = [train[0][i] for i in range(train_num)]
-    train_document = [open(DATA_ROOT + 'livedoor/' + train_path[j], 'r', encoding='utf-8').read() for j in
+    train_document = [open(file_path + 'livedoor/' + train_path[j], 'r', encoding='utf-8').read() for j in
                       range(train_num)]
     # train_text = pd.Series(train_document)
 
@@ -42,13 +42,13 @@ def prepare_train(DATA_ROOT):
     return x_train, x_train_padded, y_train, train_num
 
 
-def prepare_valid(DATA_ROOT, train_num):
+def prepare_valid(file_path, train_num):
     # validデータの用意
-    valid = pd.read_csv(Path(DATA_ROOT + 'livedoor') / 'dev.csv', header=None)
+    valid = pd.read_csv(file_path, header=None)
     valid_num = valid.shape[0]
     # valid_num = 100
     valid_path = [valid[0][i] for i in range(valid_num)]
-    valid_document = [open(DATA_ROOT + 'livedoor/' + valid_path[j], 'r', encoding='utf-8').read() for j in
+    valid_document = [open(file_path + 'livedoor/' + valid_path[j], 'r', encoding='utf-8').read() for j in
                       range(valid_num)]
     # valid_text = pd.Series(valid_document)
 
@@ -75,13 +75,13 @@ def prepare_valid(DATA_ROOT, train_num):
     return x_valid, x_valid_padded, y_valid, valid_num
 
 
-def prepare_test(DATA_ROOT, train_num):
+def prepare_test(file_path, train_num):
     # テストデータの用意
-    test = pd.read_csv(Path(DATA_ROOT + 'livedoor') / 'test.paths', header=None)
+    test = pd.read_csv(file_path, header=None)
     # test_num = test.shape[0]
     test_num = 100
     test_path = [test[0][i] for i in range(test_num)]
-    test_document = [open(DATA_ROOT + 'livedoor/' + test_path[j], 'r', encoding='utf-8').read() for j in
+    test_document = [open(file_path + 'livedoor/' + test_path[j], 'r', encoding='utf-8').read() for j in
                      range(test_num)]
     # test_text = pd.Series(test_document)
 

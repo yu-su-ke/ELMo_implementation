@@ -55,10 +55,10 @@ def replace_num(text):
     return text
 
 
-def preprocess(df_col, j_t):
-    df_col = rm_puncts(df_col)
-    df_col = rm_spaces(df_col)
-    df_col = clean_text(df_col)
-    df_col = replace_num(df_col)
-    df_col = tokenizer(df_col, j_t)
-    return df_col
+def preprocess(text, j_t):
+    text = rm_puncts(text)
+    text = rm_spaces(text)
+    text = clean_text(text)
+    text = replace_num(text)
+    text = tokenizer(text, j_t)
+    return text
