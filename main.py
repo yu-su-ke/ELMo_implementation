@@ -27,8 +27,8 @@ def main():
     embedding_model = KeyedVectors.load_word2vec_format(w2v_embedding_path, binary=True)
     is_char = False
 
-    x_train, x_train_padded, y_train, train_num = prepare_train(Path(DATA_ROOT + 'livedoor') / "dev.csv")
-    x_valid, x_valid_padded, y_valid, valid_num = prepare_valid(Path(DATA_ROOT + 'livedoor') / "dev.csv", train_num)
+    x_train, x_train_padded, y_train, train_num = prepare_train(DATA_ROOT + 'livedoor/')
+    x_valid, x_valid_padded, y_valid, valid_num = prepare_valid(DATA_ROOT + 'livedoor/', train_num)
     # x_test, x_test_padded, y_test, test_num = prepare_test(Path(DATA_ROOT + 'livedoor') / "dev.csv", train_num)
 
     x_padded, y_main, tokenizer_text, max_features = combine_train_valid(x_train, y_train, x_valid, y_valid)

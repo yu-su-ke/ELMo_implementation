@@ -11,11 +11,11 @@ from format_text import preprocess
 
 def prepare_train(file_path):
     # トレインデータの用意
-    train = pd.read_csv(file_path, header=None)
-    train_num = train.shape[0]
-    # train_num = 1000
+    train = pd.read_csv(file_path + 'train.csv', header=None)
+    # train_num = train.shape[0]
+    train_num = 100
     train_path = [train[0][i] for i in range(train_num)]
-    train_document = [open(file_path + 'livedoor/' + train_path[j], 'r', encoding='utf-8').read() for j in
+    train_document = [open(file_path + train_path[j], 'r', encoding='utf-8').read() for j in
                       range(train_num)]
     # train_text = pd.Series(train_document)
 
@@ -44,11 +44,11 @@ def prepare_train(file_path):
 
 def prepare_valid(file_path, train_num):
     # validデータの用意
-    valid = pd.read_csv(file_path, header=None)
-    valid_num = valid.shape[0]
-    # valid_num = 100
+    valid = pd.read_csv(file_path + 'dev.csv', header=None)
+    # valid_num = valid.shape[0]
+    valid_num = 100
     valid_path = [valid[0][i] for i in range(valid_num)]
-    valid_document = [open(file_path + 'livedoor/' + valid_path[j], 'r', encoding='utf-8').read() for j in
+    valid_document = [open(file_path + valid_path[j], 'r', encoding='utf-8').read() for j in
                       range(valid_num)]
     # valid_text = pd.Series(valid_document)
 
