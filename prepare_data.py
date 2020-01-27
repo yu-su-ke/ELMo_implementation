@@ -32,10 +32,6 @@ def prepare_train(file_path):
     tokenizer_train_text = text.Tokenizer()
     tokenizer_train_text.fit_on_texts(list(x_train))
 
-    print(y_train)
-    print(x_train)
-    print(type(tokenizer_train_text))
-
     x_train_seq = tokenizer_train_text.texts_to_sequences(x_train)
     x_train_padded = sequence.pad_sequences(x_train_seq, maxlen=200)
 
@@ -62,9 +58,6 @@ def prepare_valid(file_path, train_num):
 
     x_valid.index = [i for i in range(train_num, train_num + valid_num)]
     y_valid, le_valid = prepare_labels([valid[1][i] for i in range(valid_num)])
-
-    print(y_valid)
-    print(x_valid)
 
     tokenizer_valid_text = text.Tokenizer()
     tokenizer_valid_text.fit_on_texts(list(x_valid))

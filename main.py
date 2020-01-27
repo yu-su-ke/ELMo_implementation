@@ -31,6 +31,11 @@ def main():
     x_valid, x_valid_padded, y_valid, valid_num = prepare_valid(DATA_ROOT + 'livedoor/', train_num)
     # x_test, x_test_padded, y_test, test_num = prepare_test(Path(DATA_ROOT + 'livedoor') / "dev.csv", train_num)
 
+    print(x_train)
+    print(x_train_padded.shape)
+    print(x_valid)
+    print(x_valid_padded.shape)
+
     x_padded, y_main, tokenizer_text, max_features = combine_train_valid(x_train, y_train, x_valid, y_valid)
     # x_padded, y_main, tokenizer_text, max_features = combine_train_test(x_train, y_train, x_test, y_test)
 
