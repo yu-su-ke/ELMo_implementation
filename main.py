@@ -14,30 +14,25 @@ tqdm.pandas()
 
 from ELMoForManyLangs.elmoformanylangs import Embedder
 from ELMo import ELMoNet
-from prepare_data import prepare_train, prepare_valid, prepare_test
+from prepare_data import prepare_data
 from function import run_model, get_score
-from combine_data import combine_train_valid, combine_train_test
+from combine_data import combine_train_valid
 
 
 def main():
-    DATA_ROOT = './'
+    DATA_ROOT = './livedoor/'
+    train_path = DATA_ROOT + 'train.csv'
+    valid_path = DATA_ROOT + 'dev.csv'
     word_model_path = "./word"
     char_model_path = "./letter"
     w2v_embedding_path = './entity_vector/entity_vector.model.bin'
     embedding_model = KeyedVectors.load_word2vec_format(w2v_embedding_path, binary=True)
     is_char = False
 
-    x_train, x_train_padded, y_train, train_num = prepare_train(DATA_ROOT + 'livedoor/')
-    x_valid, x_valid_padded, y_valid, valid_num = prepare_valid(DATA_ROOT + 'livedoor/', train_num)
-    # x_test, x_test_padded, y_test, test_num = prepare_test(Path(DATA_ROOT + 'livedoor') / "dev.csv", train_num)
-
-    print(x_train)
-    print(x_train_padded.shape)
-    print(x_valid)
-    print(x_valid_padded.shape)
+    x_train, x_train_padded, y_train, train_num = prepare_data(train_path)
+    x_valid, x_valid_padded, y_valid, valid_num = prepare_data(valid_path, train_num)
 
     x_padded, y_main, tokenizer_text, max_features = combine_train_valid(x_train, y_train, x_valid, y_valid)
-    # x_padded, y_main, tokenizer_text, max_features = combine_train_test(x_train, y_train, x_test, y_test)
 
     word_index = tokenizer_text.word_index
     num_words = len(word_index)
@@ -50,8 +45,11 @@ def main():
     print(embedding_matrix.shape)
 
     # Creating a reverse dictionary
-    reverse_word_map = dict(map(reversed, tokenizer_text.word_index.items()))
-
+    reverse_word_map = dict(
+        map(
+            reversed, tokenizer_text.word_index.items()
+        )
+    )
 
     # Function takes a tokenized sentence and returns the words
     def sequence_to_text(list_of_indices):
@@ -59,7 +57,7 @@ def main():
         words = [reverse_word_map.get(letter) for letter in list_of_indices]
         return words
 
-    if is_char == True:
+    if is_char:
         char_e = Embedder(char_model_path)
         model = ELMoNet(char_e, embedding_matrix, 9, max_features, sequence_to_text)
         print('char mode')
@@ -78,16 +76,12 @@ def main():
 
     model = model.to(device)
     if device == 'cuda':
-        net = torch.nn.DataParallel(net) # make parallel
+        net = torch.nn.DataParallel(net)    # make parallel
         print("gpu parallel mode")
         cudnn.benchmark = True
 
     print(f"fold{0} start")
     valid_preds, training_losses, valid_losses = run_model(0, model, train_index, val_index, x_torch, y_torch, device)
-
-    # テストデータの答え
-    # test = pd.read_csv(Path(DATA_ROOT + 'livedoor') / 'test.csv', header=None)
-    # y_true_test, le_true_test = prepare_labels([test[1][i] for i in range(test_num)])
 
     print(get_score(np.argmax(valid_preds, 1), np.argmax(y_valid, 1)))
     print(np.argmax(valid_preds, 1))

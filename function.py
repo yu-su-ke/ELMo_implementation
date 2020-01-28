@@ -36,8 +36,8 @@ def run_model(index, model, train_index, val_index, x_torch, y_torch, device):
     train_dataset = torch.utils.data.Subset(full_dataset, train_index)
     valid_dataset = torch.utils.data.Subset(full_dataset, val_index)
 
-    batchsize = 32
+    batch_size = 32
 
     valid_preds, training_losses, valid_losses = train_model(index, model, train_dataset, valid_dataset,
-                                                             batchsize, device)
+                                                             batch_size, device)
     return valid_preds, training_losses, valid_losses

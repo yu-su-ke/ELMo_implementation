@@ -32,7 +32,6 @@ class ELMoNet(nn.Module):
 
         self.sequence_to_text = sequence_to_text
 
-
     def forward(self, x):
         l = x.shape[1]
 
@@ -50,7 +49,7 @@ class ELMoNet(nn.Module):
             [i, [[0] * 1024] * (l - len(i))], axis=0) if len(i) != l else i for i in h_elmo]
         h_elmo = torch.tensor(h_elmo).float().cuda()
 
-        # fasttext vector と elmo vector を concat する.
+        # fast_text vector と elmo vector を concat する.
         h_embcat = torch.cat([h_elmo, h_embedding], 2)
 
         # h_embcat = h_embedding

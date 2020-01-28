@@ -9,9 +9,9 @@ from tqdm import tqdm
 tqdm.pandas()
 
 
-def train_model(index, model, train_dataset, valid_dataset, batchsize, device):
-    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batchsize, shuffle=True, num_workers=4)
-    valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=batchsize, shuffle=False, num_workers=4)
+def train_model(index, model, train_dataset, valid_dataset, batch_size, device):
+    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=4)
+    valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=batch_size, shuffle=False, num_workers=4)
 
     no_of_epochs = 8
 
@@ -94,4 +94,5 @@ def train_model(index, model, train_dataset, valid_dataset, batchsize, device):
     print('Training complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
     print(f'save model => model{index}.bin')
     torch.save(model.state_dict(), f'./model/model{index}.bin')
+
     return valid_preds, training_losses, valid_losses
