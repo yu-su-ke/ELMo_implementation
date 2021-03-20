@@ -37,7 +37,7 @@ imagesize==1.1.0
 importlib-metadata==0.23
 itsdangerous==1.1.0
 Janome==0.3.9
-Jinja2==2.10.3
+Jinja2==2.11.3
 jmespath==0.9.4
 joblib==0.13.2
 jsonnet==0.14.0
