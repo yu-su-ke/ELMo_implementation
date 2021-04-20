@@ -68,7 +68,7 @@ plac==0.9.6
 pluggy==0.13.0
 preshed==2.0.1
 protobuf==3.9.2
-py==1.8.0
+py==1.10.0
 pycparser==2.19
 Pygments==2.4.2
 pyOpenSSL==19.0.0
